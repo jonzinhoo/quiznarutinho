@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perguntas e Respostas de Naruto</title>
+<style>
+body {
+  Background-color: #ca510b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 50;
+  font-family: black italic, verdana;
+  font size= 100px;
+}
+#question-container { 
+  text-align: center; 
+  color:#070706;
+}
+#options-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 60px;
+}
+button {
+  padding: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+#result {
+  margin-top: 40px;
+  color:#ffffff;
+}
+  </style>
+</head>
+
+<body>
+  <div id="question-container">
+    <h2 id="questions"></h2>
+    <div id="options-container">
+      <!-- Opções de resposta serão adicionadas dinamicamente aqui -->
+    </div>
+    <p id="result"></p>
+    <button onclick="nextQuestion()">Próxima Pergunta</button>
+  </div>
+  <script>
+const questions = [
+{ question: 'Quem é o primeiro sensei do time 7?', options: ['Jiraya', 'Kakashi', 'Asuma'], correctAnswer: 'Kakashi', points: 5 },
+
+{ question: 'Qual é o nome da aldeia natal de Naruto?', options: ['Vila Oculta da area', 'Vila Oculta da Folha', 'Vila Oculta da Névoa'], correctAnswer: 'Vila Oculta da Folha', points: 5 },
+
+{ question: 'Quem sela a raposa de nove caudas dentro de Naruto?', options: ['Minato Namikaze', 'Kushina Uzumaki', 'Madara Uchiha'], correctAnswer: 'Minato Namikaze', points: 5 },
+
+{ question: 'Qual é o nome do jutsu característico de Naruto?', options: ['Rasengan', 'Amaterasu', 'Chidori'], correctAnswer: 'Rasengan', points: 5 },
+
+{ question: 'Quem é o irmão mais velho de Sasuke Uchiha?', options: ['Itachi Uchiha', 'Pain', 'Shisui Uchiha'], correctAnswer: 'Itachi Uchiha', points: 5 },
+
+{ question: 'Quem é o Jinchuuriki da besta de uma cauda, Shukaku?', options: ['Naruto Uzumaki', 'Sakura Haruno', 'Gaara do Deserto'], correctAnswer: 'Gaara do Deserto', points: 5 },
+
+{ question: 'Quem foi o quarto Hokage da Vila da Folha?', options: ['Hiruzen Sarutobi', 'Tobirama Senju', 'Minato Namikaze'], correctAnswer: 'Minato Namikaze', points: 5 },
+];
+
+let currentQuestionIndex = 0;
+let totalPoints = 0;
+
+function loadQuestion() {
+  const questionElement = document.getElementById('questions');
+  const optionsContainer = document.getElementById('options-container');
+  const resultElement = document.getElementById('result');
+
+ questionElement.textContent = questions[currentQuestionIndex].question;
+
+  optionsContainer.innerHTML = '';
+
+  questions[currentQuestionIndex].options.forEach((option) => {
+    const button = document.createElement('button');
+    button.textContent = option;
+    button.onclick = () => checkAnswer (option);
+    optionsContainer.appendChild(button);
+  });
+
+  resultElement.textContent = '';
+}
+
+function checkAnswer(selectedAnswer) {
+  const currentQuestion = questions[currentQuestionIndex];
+  const correctAnswer = currentQuestion.correctAnswer;
+  const resultElement = document.getElementById('result');
+
+  if (selectedAnswer === correctAnswer) {
+    totalPoints += currentQuestion.points;
+    resultElement.textContent = `Resposta correta,parabéns! Pontos ganhos:
+${currentQuestion.points}`;
+    resultElement.style.color = 'white';
+  } else {
+    resultElement.textContent = `Resposta incorreta. Pontos: 0. Tente novamente.`;
+    resultElement.style.color = 'cian';
+  }
+}
+
+function nextQuestion() {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    loadQuestion();
+  } else {
+    document.getElementById('question-container').innerHTML = `<h2>Fim do Quiz</h2>
+<p>Pontuação total: ${totalPoints} pontos</p>`;
+  }
+}
+
+loadQuestion();
+
+</script>
+</body>
+</html>
+
